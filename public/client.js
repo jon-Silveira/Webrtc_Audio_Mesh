@@ -13,7 +13,7 @@ const localVideoComponent = document.getElementById('local-video')
 const socket = io()
 const mediaConstraints = {
 	audio: true,
-	video: { width: 1280, height: 720 },
+	video: false,
 }
 let localStream
 let remoteStream
@@ -159,7 +159,7 @@ socket.on('user-left', function(id){
 
 // FUNCTIONS ==================================================================
 function addLocalTracks(rtcPeerConnection) {
-	localStream.getVideoTracks().forEach((track) => {
+	localStream.getAudioTracks().forEach((track) => {
 		console.log(track)
 		rtcPeerConnection.addTrack(track, localStream)
 	})
