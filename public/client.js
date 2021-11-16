@@ -106,7 +106,7 @@ socket.on('start_call2', async (id,count,clients,roomId) => {
 		connections[id] = new RTCPeerConnection(iceServers);
 		addLocalTracks(connections[id])
 		connections[id].ontrack = function() {
-			//setRemoteStream(event,id)
+			setRemoteStream(event,id)
 		}
 		connections[id].onicecandidate  = function() {
 			sendIceCandidate(event,id)
@@ -121,7 +121,7 @@ socket.on('webrtc_offer2', async (id,count,clients,eventd) => {
 		connections[id] = new RTCPeerConnection(iceServers)
 		addLocalTracks(connections[id])
 		connections[id].ontrack = function() {
-			//setRemoteStream(event,id)
+			setRemoteStream(event,id)
 		}
 		connections[id].onicecandidate  = function() {
 		 sendIceCandidate(event,id)
