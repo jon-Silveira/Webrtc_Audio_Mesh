@@ -209,26 +209,26 @@ function setRemoteStream(event,id) {
 	// remoteStream = event.stream
 
 
-	// var video_chat_container = document.getElementById('video-chat-container');
+	var video_chat_container = document.getElementById('video-chat-container');
 
-	// 	console.log("ahhh   " + event.streams.length)
-	// 	var videos = document.querySelectorAll('video');
-	// 	video  = document.createElement('video');
-	// 	//div    = document.createElement('div')
+		console.log("ahhh   " + event.streams.length)
+		var videos = document.querySelectorAll('video');
+		video  = document.createElement('video');
+		//div    = document.createElement('div')
 
-	// 	video.setAttribute('data-socket', id);
+		video.setAttribute('data-socket', id);
 
-	// 	video.setAttribute('id', 'remote-video');
+		video.setAttribute('id', 'remote-video');
 
 		
-	// 	video.srcObject=event.streams[0];
-	// 	//video.src         = window.URL.createObjectURL(event.stream);
-	// 	video.autoplay    = true; 
-	// 	// video.muted       = true;
-	// 	// video.playsinline = true;
+		video.srcObject=event.streams[0];
+		//video.src         = window.URL.createObjectURL(event.stream);
+		video.autoplay    = true; 
+		// video.muted       = true;
+		// video.playsinline = true;
 		
-	// 	//div.appendChild(video);      
-	// 	document.querySelector('.videos').appendChild(video);   
+		//div.appendChild(video);      
+		document.querySelector('.videos').appendChild(video);   
 }
 
 function sendIceCandidate(event,id) {
