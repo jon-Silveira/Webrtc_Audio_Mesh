@@ -8,7 +8,7 @@ const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
-//app.use('/', express.static('public'))
+app.use('/', express.static('public'))
 
 io.on('connection', (socket) => {
   socket.on('join', (roomId) => {
