@@ -124,5 +124,5 @@ io.on('connection', (socket) => {
 // START THE SERVER =================================================================
 const port = process.env.PORT || 3123
 server.listen(port, () => {
-  console.log(`Express server listening on port ${port}`)
+  console.log(`NEW Express server listening on port ${port}`)
 })
