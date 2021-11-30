@@ -1,11 +1,14 @@
-// This Code is from https://github.com/borjanebbal/webrtc-node-app
+console.log('calling form parent process');
+
+
+// This Code is modified from https://github.com/borjanebbal/webrtc-node-app
 
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
-app.use('/', express.static('public'))
+//app.use('/', express.static('public'))
 
 io.on('connection', (socket) => {
   socket.on('join', (roomId) => {
@@ -19,38 +22,40 @@ io.on('connection', (socket) => {
       //create a room with the room ID
       socket.join(roomId)
       socket.emit('room_created', roomId)
+  
     } 
 
-    else if (numberOfClients == 1) {
-    // if there are some one in the room 
-    // emit your id to the person in the room 
-      console.log(`Joining room ${roomId} and emitting room_joined socket event`)
-      socket.join(roomId)
-      const clientd = io.sockets.adapter.rooms.get(roomId)
-      let clientlist = []
-      for (const clientId of clientd ) {clientlist.push(clientId)}
-      console.log(clientlist)
+  //   else if (numberOfClients == 1) {
+  //     // if there are some one in the room 
+  //     // emit your id to the person in the room 
+  //       console.log(`Joining room ${roomId} and emitting room_joined socket event`)
+  //       socket.join(roomId)
+  //       const clientd = io.sockets.adapter.rooms.get(roomId)
+  //       let clientlist = []
+  //       for (const clientId of clientd ) {clientlist.push(clientId)}
+  //       console.log(clientlist)
+  
+  //       // socket.emit('room_joined', roomId)
+  //       socket.emit('room_joined2',socket.id, numberOfClients, clientlist, roomId)
+  
+  // // console.log(socket.id, numberOfClients, clientd, roomId)
+  //     } 
+  
+  else if (numberOfClients >= 1) {
+      // if there are some one in the room 
+      // emit your id to the person in the room 
+        console.log(`Joining room ${roomId} and emitting room_joined socket event`)
+        socket.join(roomId)
+        //socket.emit('room_joined', roomId)
+        
+        const clientd = io.sockets.adapter.rooms.get(roomId)
+        let clientlist = []
+        for (const clientId of clientd ) {clientlist.push(clientId)}
+        console.log(clientlist)
+        socket.emit('room_joined2', socket.id, numberOfClients, clientlist, roomId)
+  
+      } 
 
-      // socket.emit('room_joined', roomId)
-      socket.emit('room_joined2',socket.id, numberOfClients, clientlist, roomId)
-
-// console.log(socket.id, numberOfClients, clientd, roomId)
-    } 
-
-else if (numberOfClients >= 2) {
-    // if there are some one in the room 
-    // emit your id to the person in the room 
-      console.log(`Joining room ${roomId} and emitting room_joined socket event`)
-      socket.join(roomId)
-      //socket.emit('room_joined', roomId)
-      
-      const clientd = io.sockets.adapter.rooms.get(roomId)
-      let clientlist = []
-      for (const clientId of clientd ) {clientlist.push(clientId)}
-      console.log(clientlist)
-      socket.emit('room_joined2', socket.id, numberOfClients, clientlist, roomId)
-
-    } 
 
     else {
     // This limits the amount of people in the room 
@@ -108,10 +113,16 @@ else if (numberOfClients >= 2) {
   })
 
 
+  socket.on('dis_con', function(event) {
+    socket.leave(event.roomId)
+    io.sockets.emit("user-left", socket.id);
+  })
+
+
 })
 
 // START THE SERVER =================================================================
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3123
 server.listen(port, () => {
   console.log(`Express server listening on port ${port}`)
 })
